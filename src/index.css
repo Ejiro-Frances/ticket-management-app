@@ -5,11 +5,12 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: oklch(19.171% 0.03836 230.362);
 
   --primary: oklch(19.171% 0.03836 230.362);
   --foreground: oklch(0.985 0 0);
   --secondary: oklch(75.236% 0.14929 235.166);
+  --accent: oklch(58.415% 0.23329 280.771);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,6 +21,7 @@
 @theme {
   --color-primary: var(--primary);
   --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
 }
 
 @keyframes float {
@@ -38,14 +40,10 @@
   animation: float 8s ease-in-out infinite;
 }
 
-/* optional delays */
+/* delays */
 .animation-delay-2000 {
   animation-delay: 2s;
 }
 .animation-delay-3500 {
   animation-delay: 3.5s;
 }
-
-/* .bg-card {
-  background: rgba(255, 255, 255, 0.03);
-} */

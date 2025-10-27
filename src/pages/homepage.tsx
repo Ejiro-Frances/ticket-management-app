@@ -2,6 +2,9 @@ import NavBar from "../components/landing-page/navbar";
 import Hero from "../components/landing-page/hero";
 import Footer from "../components/landing-page/footer";
 import Features from "../components/landing-page/features";
+import Testimonials from "../components/landing-page/testimonial";
+import Pricing from "../components/landing-page/pricing";
+import CTA from "../components/landing-page/cta";
 
 const HomePage = () => {
   return (
@@ -10,6 +13,9 @@ const HomePage = () => {
       <main className="max-w-[1440px] mx-auto mt-20 bg-foreground text-primary">
         <Hero />
         <Features />
+        <Pricing />
+        <Testimonials />
+        <CTA />
       </main>
       <Footer />
     </>

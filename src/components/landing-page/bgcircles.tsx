@@ -4,7 +4,7 @@ const BgCircles = () => {
       {/* Large soft gradient circle - top-left */}
       <div
         aria-hidden="true"
-        className="absolute z-50 -top-28 -left-24 w-96 h-96 rounded-full blur-[120px] bg-gradient-to-br from-[#2cbcff]/30 to-primary/20 animate-float"
+        className="absolute z-50 -top-28 -left-24 w-96 h-96 rounded-full blur-[120px] bg-linear-to-br from-[#2cbcff]/30 to-primary/20 animate-float"
       />
 
       {/* Medium soft circle - top-right */}
