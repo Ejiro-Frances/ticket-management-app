@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  --primary: oklch(19.171% 0.03836 230.362);
+  --foreground: oklch(0.985 0 0);
+  --secondary: oklch(75.236% 0.14929 235.166);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-foreground: var(--foreground);
+}
+
+@keyframes float {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -18px, 0) scale(1.01);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* optional delays */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-3500 {
+  animation-delay: 3.5s;
+}
+
+/* .bg-card {
+  background: rgba(255, 255, 255, 0.03);
+} */
