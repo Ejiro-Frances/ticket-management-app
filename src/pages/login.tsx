@@ -1,46 +1,54 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  User,
-  ArrowLeft,
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, AlertCircle } from "lucide-react";
+import BackButton from "../components/auth/backbutton";
+import toast from "react-hot-toast";
+
+type LoginFormData = {
+  email: string;
+  password: string;
+};
+
+type FormErrors = Partial<Record<keyof LoginFormData, string>>;
+
+type UserData = {
+  name: string;
+  email: string;
+  createdAt: string;
+  password: string;
+};
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userData, setUserData] = useState(null);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [userData, setUserData] = useState<UserData | null>(null);
 
   // Check if user is already logged in
-  useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
-    const currentUser = localStorage.getItem("currentUser");
+  // useEffect(() => {
+  //   const authStatus = localStorage.getItem("isAuthenticated");
+  //   const currentUser = localStorage.getItem("currentUser");
 
-    if (authStatus === "true" && currentUser) {
-      setIsAuthenticated(true);
-      setUserData(JSON.parse(currentUser));
-    }
-  }, []);
+  //   if (authStatus === "true" && currentUser) {
+  //     setIsAuthenticated(true);
+  //     setUserData(JSON.parse(currentUser));
+  //   }
+  // }, []);
 
   // Validate form data
-  const validateForm = () => {
+  const validateForm = (formData: LoginFormData) => {
     const { email, password } = formData;
-    const newErrors = {};
+    const newErrors: FormErrors = {};
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,14 +67,46 @@ const Login = () => {
   };
 
   // Handle input changes
-  const handleChange = (e) => {
+  // const handleChange = (
+  //   e: React.ChangeEvent<
+  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  //   >
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+
+  //   // Clear error for this field when user starts typing
+  //   if (errors[name]) {
+  //     setErrors((prev) => ({ ...prev, [name]: "" }));
+  //   }
+
+  //   // Assert the key type
+  //   const key = name as keyof LoginFormData;
+
+  //   if (errors[key]) {
+  //     setErrors((prev) => ({ ...prev, [key]: "" }));
+  //   }
+  //   // Clear login error when user starts typing
+  //   if (loginError) {
+  //     setLoginError("");
+  //   }
+  // };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const key = name as keyof LoginFormData;
+
+    setFormData((prev) => ({ ...prev, [key]: value }));
 
     // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
+    setErrors((prev) => ({
+      ...prev,
+      [key]: "", // safely typed now
+    }));
 
     // Clear login error when user starts typing
     if (loginError) {
@@ -75,9 +115,9 @@ const Login = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newErrors = validateForm();
+    const newErrors = validateForm(formData);
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -93,11 +133,11 @@ const Login = () => {
       const singleUser = localStorage.getItem("user");
 
       // Check if there's a single user (from signup page) or multiple users
-      let users = [];
+      let users: UserData[] = [];
       if (singleUser) {
-        users.push(JSON.parse(singleUser));
+        users.push(JSON.parse(singleUser) as UserData);
       }
-      users = [...users, ...storedUsers];
+      users = [...users, ...(storedUsers as UserData[])];
 
       // Find user with matching email
       const user = users.find((u) => u.email === formData.email);
@@ -116,13 +156,21 @@ const Login = () => {
             })
           );
 
-          setUserData({
-            name: user.name,
-            email: user.email,
-            createdAt: user.createdAt,
-          });
-          setIsAuthenticated(true);
+          // setUserData({
+          //   name: user.name,
+          //   email: user.email,
+          //   password: user.password,
+          //   createdAt: user.createdAt,
+          // });
+          toast.success("Welcome back!");
+
+          // setIsAuthenticated(true);
           setLoginError("");
+
+          // Small delay before redirect
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1000);
         } else {
           // Password doesn't match
           setLoginError("Invalid email or password");
@@ -137,76 +185,75 @@ const Login = () => {
   };
 
   // Handle logout
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("currentUser");
-    setIsAuthenticated(false);
-    setUserData(null);
-    setFormData({ email: "", password: "" });
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("isAuthenticated");
+  //   localStorage.removeItem("currentUser");
+  //   setIsAuthenticated(false);
+  //   setUserData(null);
+  //   setFormData({ email: "", password: "" });
+  // };
 
   // If user is authenticated, show dashboard
-  if (isAuthenticated && userData) {
-    return (
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/90 p-4">
-        <div className="w-full max-w-md">
-          <div className="bg-foreground/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-foreground/20">
-            <div className="text-center mb-6">
-              <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <User className="w-10 h-10 text-secondary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                Welcome back!
-              </h2>
-              <p className="text-foreground/70">
-                You're now logged in to TicketZen
-              </p>
-            </div>
+  // if (isAuthenticated && userData) {
+  //   return (
+  //     <section className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary to-primary/90 p-4">
+  //       <div className="w-full max-w-md">
+  //         <div className="bg-foreground/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-foreground/20">
+  //           <div className="text-center mb-6">
+  //             <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+  //               <User className="w-10 h-10 text-secondary" />
+  //             </div>
+  //             <h2 className="text-2xl font-bold text-foreground mb-2">
+  //               Welcome back!
+  //             </h2>
+  //             <p className="text-foreground/70">
+  //               You're now logged in to TicketZen
+  //             </p>
+  //           </div>
 
-            <div className="bg-primary/10 rounded-lg p-4 mb-6">
-              <div className="flex items-center mb-3">
-                <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
-                  <span className="text-secondary font-bold">
-                    {userData.name.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">{userData.name}</p>
-                  <p className="text-sm text-foreground/70">{userData.email}</p>
-                </div>
-              </div>
-              <p className="text-xs text-foreground/60">
-                Member since:{" "}
-                {new Date(userData.createdAt).toLocaleDateString()}
-              </p>
-            </div>
+  //           <div className="bg-primary/10 rounded-lg p-4 mb-6">
+  //             <div className="flex items-center mb-3">
+  //               <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
+  //                 <span className="text-secondary font-bold">
+  //                   {userData.name.charAt(0).toUpperCase()}
+  //                 </span>
+  //               </div>
+  //               <div>
+  //                 <p className="font-medium text-foreground">{userData.name}</p>
+  //                 <p className="text-sm text-foreground/70">{userData.email}</p>
+  //               </div>
+  //             </div>
+  //             <p className="text-xs text-foreground/60">
+  //               Member since:{" "}
+  //               {new Date(userData.createdAt).toLocaleDateString()}
+  //             </p>
+  //           </div>
 
-            <div className="space-y-3">
-              <button className="w-full bg-secondary text-primary py-3 rounded-lg font-medium hover:bg-secondary/90 transition-colors">
-                Go to Dashboard
-              </button>
-              <button
-                onClick={handleLogout}
-                className="w-full bg-foreground/20 text-foreground py-3 rounded-lg font-medium hover:bg-foreground/30 transition-colors"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  //           <div className="space-y-3">
+  //             <button className="w-full bg-secondary text-primary py-3 rounded-lg font-medium hover:bg-secondary/90 transition-colors">
+  //               Go to Dashboard
+  //             </button>
+  //             <button
+  //               onClick={handleLogout}
+  //               className="w-full bg-foreground/20 text-foreground py-3 rounded-lg font-medium hover:bg-foreground/30 transition-colors"
+  //             >
+  //               Logout
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-primary/90 p-4 relative overflow-hidden">
-      <button
-        onClick={() => navigate("/")}
-        className="fixed top-5 left-5 z-50 bg-white rounded-md py-2 px-5 text-primary text-sm  flex items-center gap-2"
-      >
-        <ArrowLeft />
-        Back Home
-      </button>
+    <section
+      data-testid="test-login-page"
+      className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary to-primary/90 p-4 relative overflow-hidden"
+    >
+      {/* button to go back home */}
+      <BackButton />
+
       {/* SVG Background Pattern */}
       <svg
         className="absolute inset-0 w-full h-full opacity-10"
@@ -238,14 +285,14 @@ const Login = () => {
               Welcome Back
             </h1>
             <p className="text-foreground/70">
-              Sign in to your TicketFlow account
+              Log in to your Ticket zen account
             </p>
           </div>
 
           {/* Login Error Alert */}
           {loginError && (
             <div className="mb-6 p-3 bg-red-500/20 border border-red-500/30 rounded-lg flex items-start">
-              <AlertCircle className="h-5 w-5 text-red-400 mr-2 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="h-5 w-5 text-red-400 mr-2 shrink-0 mt-0.5" />
               <p className="text-sm text-red-400">{loginError}</p>
             </div>
           )}
@@ -301,7 +348,7 @@ const Login = () => {
                   className={`w-full pl-10 pr-10 py-3 rounded-lg bg-foreground/20 border ${
                     errors.password ? "border-red-500" : "border-foreground/30"
                   } text-foreground placeholder-foreground/50 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all`}
-                  placeholder="••••••••"
+                  placeholder="Password"
                 />
                 <button
                   type="button"
@@ -352,26 +399,22 @@ const Login = () => {
               disabled={isSubmitting}
               className="w-full bg-secondary text-primary py-3 rounded-lg font-medium hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Signing In..." : "Sign In"}
+              {isSubmitting ? "Logging In..." : "Log In"}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-foreground/70">
-              Don't have an account?{" "}
+              Don't have an account?
               <Link
                 to="/signup"
-                className="font-medium text-secondary hover:text-secondary/80 transition-colors"
+                className="ml-1.5 font-medium text-secondary hover:text-secondary/80 transition-colors"
               >
                 Sign up
               </Link>
             </p>
           </div>
         </div>
-
-        <p className="mt-4 text-center text-foreground/50 text-xs">
-          By signing in, you agree to our Terms of Service and Privacy Policy.
-        </p>
       </div>
     </section>
   );
