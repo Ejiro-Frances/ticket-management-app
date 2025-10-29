@@ -121,6 +121,7 @@ const Signup = () => {
       };
 
       localStorage.setItem("user", JSON.stringify(userToSave));
+      localStorage.setItem("isAuthenticated", JSON.stringify(true));
 
       // setIsSuccess(true);
       setIsSubmitting(false);

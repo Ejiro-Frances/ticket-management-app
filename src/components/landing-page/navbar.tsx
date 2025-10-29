@@ -5,7 +5,7 @@ const NavBar = () => {
 
   return (
     <header className="fixed left-0 top-0 w-full z-50 h-20 flex justify-between items-center px-5 bg-primary text-foreground">
-      <p>Taskify</p>
+      <p className="bg-secondary rounded-md px-2 py-2 font-bold">Ticket Zen</p>
 
       <nav>
         <ul className="flex gap-7">
