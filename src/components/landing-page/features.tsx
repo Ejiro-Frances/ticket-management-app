@@ -41,18 +41,31 @@ const featuresData = [
 
 const Features = () => {
   return (
-    <section className="max-w-6xl mx-auto py-20 px-4" id="features">
+    <section
+      data-testid="test-features-section"
+      className="max-w-6xl mx-auto py-20 px-4"
+      id="features"
+    >
       <div className="text-center mb-16">
-        <h2 className="text-3xl font-bold mb-4">
+        <h2
+          data-testid="test-features-title"
+          className="text-3xl font-bold mb-4"
+        >
           Powerful Features for Your Support Team
         </h2>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p
+          data-testid="test-features-description"
+          className="text-lg text-gray-600 max-w-3xl mx-auto"
+        >
           Everything you need to streamline your customer support workflow and
           deliver exceptional service.
         </p>
       </div>
 
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul
+        data-testid="test-features-list"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
         {featuresData.map((feature, index) => (
           <li
             key={index}

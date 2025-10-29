@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
 import BgCircles from "./bgcircles";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-primary text-foreground min-h-[90vh]">
+    <section
+      test-id="test-hero-container"
+      className="relative overflow-hidden bg-primary text-foreground min-h-[90vh]"
+    >
       {/* SVG Wavy Background - positioned to cover hero */}
       <div
         className="absolute inset-0 z-10 pointer-events-none"
@@ -44,21 +48,38 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-2xl">
-            <h1 className="text-foreground text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+            <h1
+              data-testid="test-hero-title"
+              className="text-foreground text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4"
+            >
               Smart, simple ticket management
             </h1>
-            <p className="text-white text-lg mb-10">
+            <p
+              data-testid="test-hero-description"
+              className="text-white text-lg mb-10"
+            >
               Create, assign and resolve tickets faster. A modern workflow with
               useful analytics and role-based dashboards.
             </p>
 
-            <div className="relative z-40 flex flex-wrap gap-5">
-              <button className="bg-foreground text-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl hover:opacity-95 font-semibold shadow-md transition-all hover:scale-105">
-                Get started
+            <div
+              data-testid="test-hero-buttons"
+              className="relative z-40 flex flex-wrap gap-5"
+            >
+              <button
+                data-testid="test-hero-signup-button"
+                className="bg-foreground text-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl hover:opacity-95 font-semibold shadow-md transition-all hover:scale-105"
+              >
+                <Link to="/auth/signup">Get started</Link>
               </button>
-              <button className="bg-transparent inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-foreground text-foreground hover:bg-foreground/10 transition-all">
+
+              <a
+                data-testid="test-hero-learn-more-link"
+                href="#features"
+                className="bg-transparent inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-foreground text-foreground hover:bg-foreground/10 transition-all"
+              >
                 Learn more
-              </button>
+              </a>
             </div>
           </div>
 
@@ -68,9 +89,14 @@ const Hero = () => {
             <div className="bg-linear-to-b from-foreground to-foreground/90 rounded-3xl p-6 shadow-2xl border border-foreground/10 backdrop-blur-md text-primary transform hover:scale-105 transition-all duration-300">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-sm font-medium">Ticket #421</span>
-                <span className="text-xs px-3 py-1 rounded-full bg-green-500/20 text-green-400">
-                  Open
-                </span>
+                <div className="space-x-3">
+                  <span className="text-xs px-3 py-1 rounded-full bg-green-500/20 text-green-400">
+                    Open
+                  </span>
+                  <span className="text-xs px-3 py-1 rounded-full bg-amber-500/20 text-amber-400">
+                    Medium
+                  </span>
+                </div>
               </div>
 
               <h4 className="font-semibold text-lg mb-2">
@@ -80,15 +106,14 @@ const Hero = () => {
                 The user reports sudden disconnects when joining meetings.
               </p>
 
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary font-semibold">
-                  AL
+              <div className="flex justify-between items-center gap-3 border-t border-primary pt-1.5">
+                <div className="text-xs text-primary/60">
+                  Created: 10/29/2025
                 </div>
-                <div>
-                  <div className="text-sm font-medium">
-                    Assigned to Ada Lovelace
-                  </div>
-                  <div className="text-xs text-primary/60">2 hours ago</div>
+
+                <div className="flex gap-5">
+                  <button>Edit</button>
+                  <button>Delete</button>
                 </div>
               </div>
             </div>
