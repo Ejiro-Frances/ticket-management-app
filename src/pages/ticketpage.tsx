@@ -61,7 +61,7 @@ const TicketPage = () => {
       <DashboardHeader />
       <main className="mt-30 px-5 md:px-7">
         <section>
-          <h1 className="text-xl md:text-3xl text-foreground font-bold tracking-wide mb-3">
+          <h1 className="text-xl md:text-3xl text-foreground font-bold tracking-wide mb-3 mt-50 md:mt-0">
             Ticket Management
           </h1>
           <p>Create, view, edit and manage all your tickets</p>
