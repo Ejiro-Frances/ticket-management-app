@@ -30,23 +30,27 @@ const Footer = () => {
             <h4 className="text-white font-semibold mb-4">Product</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#features"
+                  className="hover:text-white transition-colors"
+                >
                   Features
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#pricing"
+                  className="hover:text-white transition-colors"
+                >
                   Pricing
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Integrations
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Changelog
+                <a
+                  href="#testimonials"
+                  className="hover:text-white transition-colors"
+                >
+                  Testimonials
                 </a>
               </li>
             </ul>
@@ -70,11 +74,6 @@ const Footer = () => {
                   Blog
                 </a>
               </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Press
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -87,7 +86,7 @@ const Footer = () => {
                   href="mailto:hello@ticketflow.com"
                   className="hover:text-white transition-colors"
                 >
-                  hello@ticketflow.com
+                  hello@ticketzen.com
                 </a>
               </li>
               <li className="flex items-center">
@@ -104,7 +103,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p>
-            &copy; {new Date().getFullYear()} TicketFlow. All rights reserved.
+            &copy; {new Date().getFullYear()} Ticket Zen. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">
@@ -112,9 +111,6 @@ const Footer = () => {
             </a>
             <a href="#" className="hover:text-white transition-colors">
               Terms of Service
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Cookie Policy
             </a>
           </div>
         </div>

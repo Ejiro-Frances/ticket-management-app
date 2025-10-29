@@ -424,7 +424,6 @@ const Signup = () => {
             </Link>
           </p>
         </div>
-        {/* </div> */}
       </section>
     </main>
   );

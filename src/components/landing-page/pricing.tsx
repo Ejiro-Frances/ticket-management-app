@@ -49,7 +49,7 @@ const pricingPlans = [
 
 const Pricing = () => {
   return (
-    <section className="py-20 px-4">
+    <section className="py-20 px-4" id="pricing">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-4">

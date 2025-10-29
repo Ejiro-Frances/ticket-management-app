@@ -184,68 +184,6 @@ const Login = () => {
     }, 1000);
   };
 
-  // Handle logout
-  // const handleLogout = () => {
-  //   localStorage.removeItem("isAuthenticated");
-  //   localStorage.removeItem("currentUser");
-  //   setIsAuthenticated(false);
-  //   setUserData(null);
-  //   setFormData({ email: "", password: "" });
-  // };
-
-  // If user is authenticated, show dashboard
-  // if (isAuthenticated && userData) {
-  //   return (
-  //     <section className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary to-primary/90 p-4">
-  //       <div className="w-full max-w-md">
-  //         <div className="bg-foreground/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-foreground/20">
-  //           <div className="text-center mb-6">
-  //             <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-  //               <User className="w-10 h-10 text-secondary" />
-  //             </div>
-  //             <h2 className="text-2xl font-bold text-foreground mb-2">
-  //               Welcome back!
-  //             </h2>
-  //             <p className="text-foreground/70">
-  //               You're now logged in to TicketZen
-  //             </p>
-  //           </div>
-
-  //           <div className="bg-primary/10 rounded-lg p-4 mb-6">
-  //             <div className="flex items-center mb-3">
-  //               <div className="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
-  //                 <span className="text-secondary font-bold">
-  //                   {userData.name.charAt(0).toUpperCase()}
-  //                 </span>
-  //               </div>
-  //               <div>
-  //                 <p className="font-medium text-foreground">{userData.name}</p>
-  //                 <p className="text-sm text-foreground/70">{userData.email}</p>
-  //               </div>
-  //             </div>
-  //             <p className="text-xs text-foreground/60">
-  //               Member since:{" "}
-  //               {new Date(userData.createdAt).toLocaleDateString()}
-  //             </p>
-  //           </div>
-
-  //           <div className="space-y-3">
-  //             <button className="w-full bg-secondary text-primary py-3 rounded-lg font-medium hover:bg-secondary/90 transition-colors">
-  //               Go to Dashboard
-  //             </button>
-  //             <button
-  //               onClick={handleLogout}
-  //               className="w-full bg-foreground/20 text-foreground py-3 rounded-lg font-medium hover:bg-foreground/30 transition-colors"
-  //             >
-  //               Logout
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </section>
-  //   );
-  // }
-
   return (
     <section
       data-testid="test-login-page"
@@ -279,7 +217,7 @@ const Login = () => {
       </svg>
 
       <div className="w-full max-w-md relative z-10">
-        <div className="bg-foreground/10 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-foreground/20">
+        <div className="backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-foreground/20">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Welcome Back

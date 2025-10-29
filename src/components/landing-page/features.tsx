@@ -41,7 +41,7 @@ const featuresData = [
 
 const Features = () => {
   return (
-    <section className="max-w-6xl mx-auto py-20 px-4">
+    <section className="max-w-6xl mx-auto py-20 px-4" id="features">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold mb-4">
           Powerful Features for Your Support Team

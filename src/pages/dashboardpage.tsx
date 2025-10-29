@@ -1,58 +1,149 @@
-// src/pages/dashboardpage.tsx
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import DashboardHeader from "../components/shared/dashboardheader";
+import { getTickets } from "../utils/ticketservice";
+import type { Ticket } from "../types/types";
 
 const DashboardPage = () => {
-  const navigate = useNavigate();
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("currentUser");
-    navigate("/login");
-  };
+  useEffect(() => {
+    const stored = getTickets();
+    setTickets(stored);
+  }, []);
+
+  // Derived counts
+  const totalTickets = tickets.length;
+  const openTickets = tickets.filter((t) => t.status === "OPEN").length;
+  const inProgressTickets = tickets.filter(
+    (t) => t.status === "IN_PROGRESS"
+  ).length;
+  const closedTickets = tickets.filter((t) => t.status === "CLOSED").length;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
-      {/* NAVIGATION */}
-      <nav className="w-full bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-
-          <div className="flex items-center space-x-6">
-            <Link
-              to="/dashboard/tickets"
-              className="text-gray-700 font-medium hover:text-blue-600"
-            >
-              Ticket Management
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-bprimary/90transition"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </nav>
+    <div className="flex flex-col items-center">
+      <DashboardHeader />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 py-10">
+      <main className="flex-1 w-full max-w-[1440px] mx-auto mt-20 px-6 py-10">
         <h2 className="text-xl font-semibold mb-6">Summary Statistics</h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-white shadow p-6 rounded-lg text-center">
-            <h3 className="text-lg font-medium text-gray-600">Total Tickets</h3>
-            <p className="text-3xl font-bold text-blue-600 mt-2">120</p>
-          </div>
-          <div className="bg-white shadow p-6 rounded-lg text-center">
-            <h3 className="text-lg font-medium text-gray-600">Open Tickets</h3>
-            <p className="text-3xl font-bold text-yellow-500 mt-2">35</p>
-          </div>
-          <div className="bg-white shadow p-6 rounded-lg text-center">
-            <h3 className="text-lg font-medium text-gray-600">
-              Resolved Tickets
+        <article className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+          {/* TOTAL */}
+          <div className="bg-secondary/20 shadow p-6 rounded-lg text-center">
+            <div className="w-16 h-16 rounded-full bg-secondary/50 text-secondary flex items-center justify-center mr-4 mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-foreground/80">
+              Total Tickets
             </h3>
-            <p className="text-3xl font-bold text-green-600 mt-2">85</p>
+            <p className="text-3xl font-bold text-secondary mt-2">
+              {totalTickets}
+            </p>
           </div>
+
+          {/* OPEN */}
+          <div className="bg-secondary/20 shadow p-6 rounded-lg text-center">
+            <div className="w-16 h-16 rounded-full bg-green-100 text-green-950 flex items-center justify-center mr-4 mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-foreground/80">
+              Open Tickets
+            </h3>
+            <p className="text-3xl font-bold text-green-500 mt-2">
+              {openTickets}
+            </p>
+          </div>
+
+          {/* IN PROGRESS */}
+          <div className="bg-secondary/20 shadow p-6 rounded-lg text-center">
+            <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-950 flex items-center justify-center mr-4 mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-foreground">In Progress</h3>
+            <p className="text-3xl font-bold text-amber-500 mt-2">
+              {inProgressTickets}
+            </p>
+          </div>
+
+          {/* CLOSED */}
+          <div className="bg-secondary/20 shadow p-6 rounded-lg text-center">
+            <div className="w-16 h-16 rounded-full bg-gray-100 text-gray-900 flex items-center justify-center mr-4 mx-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-foreground">
+              Closed Tickets
+            </h3>
+            <p className="text-3xl font-bold text-gray-500 mt-2">
+              {closedTickets}
+            </p>
+          </div>
+        </article>
+
+        {/* manage ticket button */}
+        <div className="flex justify-center mt-10">
+          <Link
+            to="/tickets"
+            className="border border-secondary py-2 px-4 rounded-md text-secondary hover:bg-secondary/20 font-medium hover:text-secondary/90 cursor-pointer transition ease-in"
+          >
+            Manage Tickets
+          </Link>
         </div>
       </main>
     </div>
